@@ -1,71 +1,46 @@
-CREATE TABLE customers (
-    customer_id VARCHAR(50) PRIMARY KEY,
-    customer_unique_id VARCHAR(50) NOT NULL,
-    customer_zip_code_prefix INTEGER,
-    customer_city VARCHAR(100),
-    customer_state CHAR(2)
+-- Apply once to an empty PostgreSQL database.
+BEGIN;
+
+CREATE TABLE public.customers (
+    customer_id TEXT PRIMARY KEY CHECK (customer_id ~ '^[0-9a-f]{32}$'),
+    customer_unique_id TEXT NOT NULL CHECK (customer_unique_id ~ '^[0-9a-f]{32}$'),
+    customer_state TEXT NOT NULL CHECK (customer_state ~ '^[A-Z]{2}$')
 );
 
-CREATE TABLE sellers (
-    seller_id VARCHAR(50) PRIMARY KEY,
-    seller_zip_code_prefix INTEGER,
-    seller_city VARCHAR(100),
-    seller_state CHAR(2)
+CREATE TABLE public.sellers (
+    seller_id TEXT PRIMARY KEY CHECK (seller_id ~ '^[0-9a-f]{32}$'),
+    seller_state TEXT NOT NULL CHECK (seller_state ~ '^[A-Z]{2}$')
 );
 
-CREATE TABLE products (
-    product_id VARCHAR(50) PRIMARY KEY,
-    product_category_name VARCHAR(255),
-    product_name_lenght INTEGER,
-    product_description_lenght INTEGER,
-    product_photos_qty INTEGER,
-    product_weight_g NUMERIC,
-    product_length_cm NUMERIC,
-    product_height_cm NUMERIC,
-    product_width_cm NUMERIC
+CREATE TABLE public.products (
+    product_id TEXT PRIMARY KEY CHECK (product_id ~ '^[0-9a-f]{32}$'),
+    product_category_name TEXT CHECK (btrim(product_category_name) <> '')
 );
 
-CREATE TABLE orders (
-    order_id VARCHAR(50) PRIMARY KEY,
-    customer_id VARCHAR(50) NOT NULL,
-    order_status VARCHAR(50),
-    order_purchase_timestamp TIMESTAMP,
-    order_approved_at TIMESTAMP,
-    order_delivered_carrier_date TIMESTAMP,
-    order_delivered_customer_date TIMESTAMP,
-    order_estimated_delivery_date TIMESTAMP,
-
-    CONSTRAINT fk_order_customer
-        FOREIGN KEY (customer_id)
-        REFERENCES customers(customer_id)
+CREATE TABLE public.orders (
+    order_id TEXT PRIMARY KEY CHECK (order_id ~ '^[0-9a-f]{32}$'),
+    customer_id TEXT NOT NULL UNIQUE REFERENCES public.customers (customer_id),
+    order_status TEXT NOT NULL CHECK (
+        order_status IN ('approved', 'canceled', 'created', 'delivered',
+                         'invoiced', 'processing', 'shipped', 'unavailable')
+    ),
+    order_purchase_timestamp TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    order_approved_at TIMESTAMP WITHOUT TIME ZONE,
+    order_delivered_carrier_date TIMESTAMP WITHOUT TIME ZONE,
+    order_delivered_customer_date TIMESTAMP WITHOUT TIME ZONE,
+    order_estimated_delivery_date TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
 
-CREATE TABLE order_items (
-    order_id VARCHAR(50) NOT NULL,
-    order_item_id INTEGER NOT NULL,
-
-    product_id VARCHAR(50) NOT NULL,
-    seller_id VARCHAR(50) NOT NULL,
-
-    shipping_limit_date TIMESTAMP,
-
-    price NUMERIC(12,2)
-        CHECK (price >= 0),
-
-    freight_value NUMERIC(12,2)
-        CHECK (freight_value >= 0),
-
-    PRIMARY KEY (order_id, order_item_id),
-
-    CONSTRAINT fk_item_order
-        FOREIGN KEY (order_id)
-        REFERENCES orders(order_id),
-
-    CONSTRAINT fk_item_product
-        FOREIGN KEY (product_id)
-        REFERENCES products(product_id),
-
-    CONSTRAINT fk_item_seller
-        FOREIGN KEY (seller_id)
-        REFERENCES sellers(seller_id)
+CREATE TABLE public.order_items (
+    order_id TEXT NOT NULL REFERENCES public.orders (order_id),
+    order_item_id INTEGER NOT NULL CHECK (order_item_id > 0),
+    product_id TEXT NOT NULL REFERENCES public.products (product_id),
+    seller_id TEXT NOT NULL REFERENCES public.sellers (seller_id),
+    shipping_limit_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    price NUMERIC(12,2) NOT NULL CHECK (price >= 0 AND price <> 'NaN'::NUMERIC),
+    freight_value NUMERIC(12,2) NOT NULL
+        CHECK (freight_value >= 0 AND freight_value <> 'NaN'::NUMERIC),
+    PRIMARY KEY (order_id, order_item_id)
 );
+
+COMMIT;

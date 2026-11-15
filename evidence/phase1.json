@@ -1,0 +1,276 @@
+{
+  "comparison": {
+    "all_table_sha256_equal": true,
+    "measure_totals_equal": true,
+    "row_counts_equal": true,
+    "source_sha256_equal": true
+  },
+  "initial_row_counts": {
+    "customers": 0,
+    "order_items": 0,
+    "orders": 0,
+    "products": 0,
+    "sellers": 0
+  },
+  "mode": "replay",
+  "problems": [],
+  "runs": [
+    {
+      "ingestion": {
+        "files": {
+          "customers": {
+            "file": "olist_customers_dataset.csv",
+            "rows_read": 99441,
+            "rows_trimmed": 0,
+            "sha256": "983a422239e1712ded753b3bf9ecf47dc73f144d306029dcfa99e70a226883d2"
+          },
+          "order_items": {
+            "file": "olist_order_items_dataset.csv",
+            "rows_read": 112650,
+            "rows_trimmed": 0,
+            "sha256": "0bc4d068c4fe38cbb01bd90e8746e3c613fe7b4baef75fab7b0e329701c3e279"
+          },
+          "orders": {
+            "file": "olist_orders_dataset.csv",
+            "rows_read": 99441,
+            "rows_trimmed": 0,
+            "sha256": "8df58ef3d2d7e9944010f7beecd9b75367f5588ec6e3c91cec19ae3345ef9ecf"
+          },
+          "products": {
+            "file": "olist_products_dataset.csv",
+            "rows_read": 32951,
+            "rows_trimmed": 0,
+            "sha256": "3e6569628a17fbc75fd206ee357b59e20364b9afa90f5b6cd5b4d624c58aa9cc"
+          },
+          "sellers": {
+            "file": "olist_sellers_dataset.csv",
+            "rows_read": 3095,
+            "rows_trimmed": 0,
+            "sha256": "1f643d2b950373b85735e7794b20986f528d7a000432e7c6f9bcbb44d0846a0e"
+          }
+        },
+        "order_selection": {
+          "eligible_orders_outside_sample": 89441,
+          "first_sampled_purchase": "2016-09-04 21:15:19",
+          "last_sampled_purchase": "2017-05-17 20:55:33",
+          "rejection_reasons": {},
+          "requested": 10000,
+          "rows_rejected_before_sampling": 0,
+          "sampled": 10000
+        },
+        "tables": {
+          "customers": 10000,
+          "order_items": 11192,
+          "orders": 10000,
+          "products": 5253,
+          "sellers": 890
+        },
+        "validation": {
+          "customers": {
+            "rejection_reasons": {},
+            "rows_checked": 10000,
+            "rows_outside_scope": 89441,
+            "rows_rejected": 0,
+            "rows_valid_but_no_longer_referenced": 0
+          },
+          "order_items": {
+            "rejection_reasons": {},
+            "rows_checked": 11192,
+            "rows_outside_scope": 101458,
+            "rows_rejected": 0,
+            "rows_valid_but_no_longer_referenced": 0
+          },
+          "orders": {
+            "rejection_reasons": {},
+            "rows_checked": 10000,
+            "rows_rejected": 0,
+            "rows_valid_but_no_longer_referenced": 0
+          },
+          "products": {
+            "rejection_reasons": {},
+            "rows_checked": 5253,
+            "rows_outside_scope": 27698,
+            "rows_rejected": 0,
+            "rows_valid_but_no_longer_referenced": 0
+          },
+          "sellers": {
+            "rejection_reasons": {},
+            "rows_checked": 890,
+            "rows_outside_scope": 2205,
+            "rows_rejected": 0,
+            "rows_valid_but_no_longer_referenced": 0
+          }
+        }
+      },
+      "run": 1,
+      "verification": {
+        "measure_totals": {
+          "total_item_freight_brl": "216858.65",
+          "total_item_price_brl": "1420857.13"
+        },
+        "postgres_server_version": "18.6",
+        "relationship_counts": {
+          "items_linked_to_all_parents": 11192,
+          "orders_without_items": 153
+        },
+        "row_counts": {
+          "customers": 10000,
+          "order_items": 11192,
+          "orders": 10000,
+          "products": 5253,
+          "sellers": 890
+        },
+        "table_sha256": {
+          "customers": "2b758011bbe25504f430f7d99d1cedd9e56e027fe61cf56efcc27fa1e9072c14",
+          "order_items": "825d71f7ab3a5fd475d69545a530c43cb71472b121f53cce165f65450fcedb1f",
+          "orders": "9fc27fd0f1374f51eae084635838e6b69aa0b55feb1f92593e6db57836fd9249",
+          "products": "9b8e505c184126df2660c2cb07523781174c8245a6440e939c3f33227574939b",
+          "sellers": "c28bd2b15d1f12612e84cf5402ad545700a10db69da3a82a24a8bf52f4059f60"
+        },
+        "violations": {
+          "duplicate_customer_keys": 0,
+          "duplicate_item_keys": 0,
+          "duplicate_order_customer_keys": 0,
+          "duplicate_order_keys": 0,
+          "duplicate_product_keys": 0,
+          "duplicate_seller_keys": 0,
+          "items_missing_order": 0,
+          "items_missing_product": 0,
+          "items_missing_seller": 0,
+          "items_with_invalid_line_number": 0,
+          "items_with_invalid_price_or_freight": 0,
+          "orders_missing_customer": 0
+        }
+      }
+    },
+    {
+      "ingestion": {
+        "files": {
+          "customers": {
+            "file": "olist_customers_dataset.csv",
+            "rows_read": 99441,
+            "rows_trimmed": 0,
+            "sha256": "983a422239e1712ded753b3bf9ecf47dc73f144d306029dcfa99e70a226883d2"
+          },
+          "order_items": {
+            "file": "olist_order_items_dataset.csv",
+            "rows_read": 112650,
+            "rows_trimmed": 0,
+            "sha256": "0bc4d068c4fe38cbb01bd90e8746e3c613fe7b4baef75fab7b0e329701c3e279"
+          },
+          "orders": {
+            "file": "olist_orders_dataset.csv",
+            "rows_read": 99441,
+            "rows_trimmed": 0,
+            "sha256": "8df58ef3d2d7e9944010f7beecd9b75367f5588ec6e3c91cec19ae3345ef9ecf"
+          },
+          "products": {
+            "file": "olist_products_dataset.csv",
+            "rows_read": 32951,
+            "rows_trimmed": 0,
+            "sha256": "3e6569628a17fbc75fd206ee357b59e20364b9afa90f5b6cd5b4d624c58aa9cc"
+          },
+          "sellers": {
+            "file": "olist_sellers_dataset.csv",
+            "rows_read": 3095,
+            "rows_trimmed": 0,
+            "sha256": "1f643d2b950373b85735e7794b20986f528d7a000432e7c6f9bcbb44d0846a0e"
+          }
+        },
+        "order_selection": {
+          "eligible_orders_outside_sample": 89441,
+          "first_sampled_purchase": "2016-09-04 21:15:19",
+          "last_sampled_purchase": "2017-05-17 20:55:33",
+          "rejection_reasons": {},
+          "requested": 10000,
+          "rows_rejected_before_sampling": 0,
+          "sampled": 10000
+        },
+        "tables": {
+          "customers": 10000,
+          "order_items": 11192,
+          "orders": 10000,
+          "products": 5253,
+          "sellers": 890
+        },
+        "validation": {
+          "customers": {
+            "rejection_reasons": {},
+            "rows_checked": 10000,
+            "rows_outside_scope": 89441,
+            "rows_rejected": 0,
+            "rows_valid_but_no_longer_referenced": 0
+          },
+          "order_items": {
+            "rejection_reasons": {},
+            "rows_checked": 11192,
+            "rows_outside_scope": 101458,
+            "rows_rejected": 0,
+            "rows_valid_but_no_longer_referenced": 0
+          },
+          "orders": {
+            "rejection_reasons": {},
+            "rows_checked": 10000,
+            "rows_rejected": 0,
+            "rows_valid_but_no_longer_referenced": 0
+          },
+          "products": {
+            "rejection_reasons": {},
+            "rows_checked": 5253,
+            "rows_outside_scope": 27698,
+            "rows_rejected": 0,
+            "rows_valid_but_no_longer_referenced": 0
+          },
+          "sellers": {
+            "rejection_reasons": {},
+            "rows_checked": 890,
+            "rows_outside_scope": 2205,
+            "rows_rejected": 0,
+            "rows_valid_but_no_longer_referenced": 0
+          }
+        }
+      },
+      "run": 2,
+      "verification": {
+        "measure_totals": {
+          "total_item_freight_brl": "216858.65",
+          "total_item_price_brl": "1420857.13"
+        },
+        "postgres_server_version": "18.6",
+        "relationship_counts": {
+          "items_linked_to_all_parents": 11192,
+          "orders_without_items": 153
+        },
+        "row_counts": {
+          "customers": 10000,
+          "order_items": 11192,
+          "orders": 10000,
+          "products": 5253,
+          "sellers": 890
+        },
+        "table_sha256": {
+          "customers": "2b758011bbe25504f430f7d99d1cedd9e56e027fe61cf56efcc27fa1e9072c14",
+          "order_items": "825d71f7ab3a5fd475d69545a530c43cb71472b121f53cce165f65450fcedb1f",
+          "orders": "9fc27fd0f1374f51eae084635838e6b69aa0b55feb1f92593e6db57836fd9249",
+          "products": "9b8e505c184126df2660c2cb07523781174c8245a6440e939c3f33227574939b",
+          "sellers": "c28bd2b15d1f12612e84cf5402ad545700a10db69da3a82a24a8bf52f4059f60"
+        },
+        "violations": {
+          "duplicate_customer_keys": 0,
+          "duplicate_item_keys": 0,
+          "duplicate_order_customer_keys": 0,
+          "duplicate_order_keys": 0,
+          "duplicate_product_keys": 0,
+          "duplicate_seller_keys": 0,
+          "items_missing_order": 0,
+          "items_missing_product": 0,
+          "items_missing_seller": 0,
+          "items_with_invalid_line_number": 0,
+          "items_with_invalid_price_or_freight": 0,
+          "orders_missing_customer": 0
+        }
+      }
+    }
+  ],
+  "status": "passed"
+}

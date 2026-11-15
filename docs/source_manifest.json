@@ -1,0 +1,31 @@
+{
+  "dataset": "Brazilian E-Commerce Public Dataset by Olist",
+  "publisher": "Olist",
+  "source_url": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
+  "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "local_snapshot_verified_on": "2026-11-15",
+  "version": "Snapshot identified by the SHA-256 of each CSV in the team archive. Checksums match the local Kaggle snapshot recorded on 2026-11-13.",
+  "selection_rule": "First 10,000 eligible orders by parsed purchase timestamp, then order_id. Retain their item lines and referenced customers, products and sellers. Apply the rejection rules in the design note.",
+  "files": {
+    "olist_customers_dataset.csv": {
+      "rows": 99441,
+      "sha256": "983a422239e1712ded753b3bf9ecf47dc73f144d306029dcfa99e70a226883d2"
+    },
+    "olist_order_items_dataset.csv": {
+      "rows": 112650,
+      "sha256": "0bc4d068c4fe38cbb01bd90e8746e3c613fe7b4baef75fab7b0e329701c3e279"
+    },
+    "olist_orders_dataset.csv": {
+      "rows": 99441,
+      "sha256": "8df58ef3d2d7e9944010f7beecd9b75367f5588ec6e3c91cec19ae3345ef9ecf"
+    },
+    "olist_products_dataset.csv": {
+      "rows": 32951,
+      "sha256": "3e6569628a17fbc75fd206ee357b59e20364b9afa90f5b6cd5b4d624c58aa9cc"
+    },
+    "olist_sellers_dataset.csv": {
+      "rows": 3095,
+      "sha256": "1f643d2b950373b85735e7794b20986f528d7a000432e7c6f9bcbb44d0846a0e"
+    }
+  }
+}

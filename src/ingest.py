@@ -1,39 +1,52 @@
-from sqlalchemy import create_engine
-from sqlalchemy import text
+"""Refresh the five Olist source tables from the selected CSV subset."""
 
-from config import DB_CONFIG
+import argparse
+import json
+from pathlib import Path
 
-DATABASE_URL = (
-    f"postgresql+psycopg2://"
-    f"{DB_CONFIG['user']}:{DB_CONFIG['password']}"
-    f"@{DB_CONFIG['host']}:"
-    f"{DB_CONFIG['port']}/"
-    f"{DB_CONFIG['database']}"
-)
+from sqlalchemy import MetaData, Table, text
+from sqlalchemy.engine import Engine
 
-engine = create_engine(DATABASE_URL)
+from .config import make_engine
+from .subset import prepare_subset
 
-def transactional_reload():
+
+def load(engine: Engine, data_dir: Path, order_limit: int = 10_000) -> dict:
+    tables, audit = prepare_subset(data_dir, order_limit)
+    metadata = MetaData()
 
     with engine.begin() as conn:
+        conn.execute(text("""
+            TRUNCATE TABLE public.order_items, public.orders, public.products,
+                           public.sellers, public.customers
+            RESTRICT
+        """))
+        for name, frame in tables.items():
+            if frame.empty:
+                continue
+            table = Table(name, metadata, schema="public", autoload_with=conn)
+            # Send native ints, Decimals and datetimes through the typed SQLAlchemy table.
+            # Object dtype lets pandas replace both NaT and pd.NA with SQL NULL.
+            records = frame.astype(object).where(frame.notna(), None).to_dict("records")
+            for start in range(0, len(records), 1_000):
+                conn.execute(table.insert(), records[start:start + 1_000])
 
-        conn.execute(
-            text(
-                """
-                TRUNCATE TABLE
-                    order_items,
-                    orders,
-                    products,
-                    sellers,
-                    customers
-                CASCADE;
-                """
-            )
-        )
+    return {"tables": {name: len(frame) for name, frame in tables.items()}, **audit}
 
-        print("Tables truncated")
 
-        # Load data here
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--data-dir", type=Path, default=Path("data"))
+    parser.add_argument("--order-limit", type=int, default=10_000)
+    args = parser.parse_args()
+
+    engine = make_engine()
+    try:
+        audit = load(engine, args.data_dir, args.order_limit)
+        print(json.dumps(audit, indent=2))
+    finally:
+        engine.dispose()
+
 
 if __name__ == "__main__":
-    transactional_reload()
+    main()
