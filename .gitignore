@@ -1,6 +1,8 @@
 .env
 .env.*
 !.env.example
+.neon
+node_modules/
 .venv/
 venv/
 __pycache__/
