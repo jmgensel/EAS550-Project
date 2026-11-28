@@ -1,11 +1,14 @@
 import csv
 import os
+import pathlib
 from pathlib import Path
 import psycopg2
 
 # Determine project directories.
 ROOT = Path(__file__).resolve().parent.parent
-FIXTURE_DIR = ROOT / "fixtures"
+FIXTURE_DIR = pathlib.Path(
+    os.getenv("FIXTURE_PATH", ROOT / "fixtures/small")
+)
 SCHEMA_FILE = ROOT / "sql" / "schema.sql"
 
 # Tables must be loaded in foreign-key dependency order.
